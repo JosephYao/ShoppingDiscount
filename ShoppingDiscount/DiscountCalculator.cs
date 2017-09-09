@@ -4,12 +4,20 @@ namespace ShoppingDiscount
 {
     public class DiscountCalculator
     {
-        public double calculate(Member member, int amount)
+        public double Calculate(Member member, int amount, int count)
         {
+            if (HasNormalDiscount(member, amount))
+                return amount * 0.85;
+
             if (HasVipDiscount(member, amount))
                 return amount * 0.8;
 
             return amount;
+        }
+
+        private bool HasNormalDiscount(Member member, int amount)
+        {
+            return member == Normal && amount >= 1000;
         }
 
         private bool HasVipDiscount(Member member, int amount)

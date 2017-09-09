@@ -11,19 +11,25 @@ namespace TestShoppingDiscount
         [Fact]
         public void No_discount()
         {
-            Assert.Equal(100, discountCalculator.calculate(Member.Normal, 100));
+            Assert.Equal(100, discountCalculator.Calculate(Member.Normal, 100, 0));
         }
 
         [Fact]
         public void Discount_for_vip()
         {
-            Assert.Equal(500 * 0.8, discountCalculator.calculate(Member.VIP, 500));
+            Assert.Equal(500 * 0.8, discountCalculator.Calculate(Member.VIP, 500, 0));
         }
 
         [Fact]
         public void No_discount_for_vip()
         {
-            Assert.Equal(499, discountCalculator.calculate(Member.VIP, 499));
+            Assert.Equal(499, discountCalculator.Calculate(Member.VIP, 499, 0));
+        }
+
+        [Fact]
+        public void Discount_for_normal()
+        {
+            Assert.Equal(1000 * 0.85, discountCalculator.Calculate(Member.Normal, 1000, 4));
         }
     }
 }
