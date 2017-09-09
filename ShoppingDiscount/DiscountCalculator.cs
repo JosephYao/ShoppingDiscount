@@ -6,10 +6,15 @@ namespace ShoppingDiscount
     {
         public double calculate(Member member, int amount)
         {
-            if (member == VIP)
+            if (HasVipDiscount(member, amount))
                 return amount * 0.8;
 
             return amount;
+        }
+
+        private bool HasVipDiscount(Member member, int amount)
+        {
+            return member == VIP && amount >= 500;
         }
     }
 }
