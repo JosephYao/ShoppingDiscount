@@ -1,4 +1,6 @@
-﻿using static ShoppingDiscount.Member;
+﻿using System.Collections.Generic;
+using System.Linq;
+using static ShoppingDiscount.Member;
 
 namespace ShoppingDiscount
 {
@@ -12,13 +14,26 @@ namespace ShoppingDiscount
 
         public double Calculate(Member member, int amount, int count)
         {
-            if (HasNormalDiscount(member, amount, count))
-                return amount * DiscountForNormal;
+            var discountOptions = new List<DiscountOption>
+            {
+                new DiscountOption
+                {
+                    HasDiscount = HasNormalDiscount(member, amount, count),
+                    Amount = amount * DiscountForNormal
+                },
+                new DiscountOption
+                {
+                    HasDiscount = HasVipDiscount(member, amount),
+                    Amount = amount * DiscountForVip
+                },
+                new DiscountOption
+                {
+                    HasDiscount = true,
+                    Amount = amount
+                },
+            };
 
-            if (HasVipDiscount(member, amount))
-                return amount * DiscountForVip;
-
-            return amount;
+            return discountOptions.First(op => op.HasDiscount).Amount;
         }
 
         private bool HasNormalDiscount(Member member, int amount, int count)
@@ -30,5 +45,11 @@ namespace ShoppingDiscount
         {
             return member == VIP && amount >= MinimalAmountForVipDiscount;
         }
+    }
+
+    internal class DiscountOption
+    {
+        public bool HasDiscount { get; set; }
+        public double Amount { get; set; }
     }
 }
