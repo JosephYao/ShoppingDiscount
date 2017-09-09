@@ -4,25 +4,31 @@ namespace ShoppingDiscount
 {
     public class DiscountCalculator
     {
+        public const int MinimalProductCountForNormalDiscount = 4;
+        public const int MinimalAmountForVipDiscount = 500;
+        public const int MinimalAmountForNormalDiscount = 1000;
+        public const double DiscountForNormal = 0.85;
+        public const double DiscountForVip = 0.8;
+
         public double Calculate(Member member, int amount, int count)
         {
             if (HasNormalDiscount(member, amount, count))
-                return amount * 0.85;
+                return amount * DiscountForNormal;
 
             if (HasVipDiscount(member, amount))
-                return amount * 0.8;
+                return amount * DiscountForVip;
 
             return amount;
         }
 
         private bool HasNormalDiscount(Member member, int amount, int count)
         {
-            return member == Normal && amount >= 1000 && count >= 4;
+            return member == Normal && amount >= MinimalAmountForNormalDiscount && count >= MinimalProductCountForNormalDiscount;
         }
 
         private bool HasVipDiscount(Member member, int amount)
         {
-            return member == VIP && amount >= 500;
+            return member == VIP && amount >= MinimalAmountForVipDiscount;
         }
     }
 }

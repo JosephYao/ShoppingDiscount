@@ -1,41 +1,43 @@
 ﻿using System;
 using ShoppingDiscount;
 using Xunit;
+using static ShoppingDiscount.DiscountCalculator;
 
 namespace TestShoppingDiscount
 {
     public class Tests
     {
+        private const int AnyCount = 10;
         private readonly DiscountCalculator discountCalculator = new DiscountCalculator();
 
         [Fact]
         public void No_discount_for_normal_even_if_amount_reach_1000()
         {
-            Assert.Equal(1000, discountCalculator.Calculate(Member.Normal, 1000, 3));
+            Assert.Equal(MinimalAmountForNormalDiscount, discountCalculator.Calculate(Member.Normal, MinimalAmountForNormalDiscount, MinimalProductCountForNormalDiscount - 1));
         }
 
         [Fact]
         public void No_discount_for_normal_even_if_count_reach_4()
         {
-            Assert.Equal(999, discountCalculator.Calculate(Member.Normal, 999, 4));
+            Assert.Equal(MinimalAmountForNormalDiscount - 1, discountCalculator.Calculate(Member.Normal, MinimalAmountForNormalDiscount - 1, MinimalProductCountForNormalDiscount));
         }
 
         [Fact]
         public void Discount_for_vip()
         {
-            Assert.Equal(500 * 0.8, discountCalculator.Calculate(Member.VIP, 500, 0));
+            Assert.Equal(MinimalAmountForVipDiscount * DiscountForVip, discountCalculator.Calculate(Member.VIP, MinimalAmountForVipDiscount, AnyCount));
         }
 
         [Fact]
         public void No_discount_for_vip()
         {
-            Assert.Equal(499, discountCalculator.Calculate(Member.VIP, 499, 0));
+            Assert.Equal(MinimalAmountForVipDiscount - 1, discountCalculator.Calculate(Member.VIP, MinimalAmountForVipDiscount - 1, AnyCount));
         }
 
         [Fact]
         public void Discount_for_normal()
         {
-            Assert.Equal(1000 * 0.85, discountCalculator.Calculate(Member.Normal, 1000, 4));
+            Assert.Equal(MinimalAmountForNormalDiscount * DiscountForNormal, discountCalculator.Calculate(Member.Normal, MinimalAmountForNormalDiscount, MinimalProductCountForNormalDiscount));
         }
     }
 }
