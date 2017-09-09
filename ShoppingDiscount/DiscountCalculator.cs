@@ -1,9 +1,14 @@
-﻿namespace ShoppingDiscount
+﻿using static ShoppingDiscount.Member;
+
+namespace ShoppingDiscount
 {
     public class DiscountCalculator
     {
-        public int calculate(Member member, int amount)
+        public double calculate(Member member, int amount)
         {
+            if (member == VIP)
+                return amount * 0.8;
+
             return amount;
         }
     }

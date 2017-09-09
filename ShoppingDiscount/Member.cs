@@ -2,6 +2,7 @@
 {
     public enum Member
     {
-        Normal
+        Normal,
+        VIP
     }
 }
