@@ -6,7 +6,7 @@ namespace ShoppingDiscount
     {
         public double Calculate(Member member, int amount, int count)
         {
-            if (HasNormalDiscount(member, amount))
+            if (HasNormalDiscount(member, amount, count))
                 return amount * 0.85;
 
             if (HasVipDiscount(member, amount))
@@ -15,9 +15,9 @@ namespace ShoppingDiscount
             return amount;
         }
 
-        private bool HasNormalDiscount(Member member, int amount)
+        private bool HasNormalDiscount(Member member, int amount, int count)
         {
-            return member == Normal && amount >= 1000;
+            return member == Normal && amount >= 1000 && count >= 4;
         }
 
         private bool HasVipDiscount(Member member, int amount)

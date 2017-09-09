@@ -9,9 +9,15 @@ namespace TestShoppingDiscount
         private readonly DiscountCalculator discountCalculator = new DiscountCalculator();
 
         [Fact]
-        public void No_discount()
+        public void No_discount_for_normal_even_if_amount_reach_1000()
         {
-            Assert.Equal(100, discountCalculator.Calculate(Member.Normal, 100, 0));
+            Assert.Equal(1000, discountCalculator.Calculate(Member.Normal, 1000, 3));
+        }
+
+        [Fact]
+        public void No_discount_for_normal_even_if_count_reach_4()
+        {
+            Assert.Equal(999, discountCalculator.Calculate(Member.Normal, 999, 4));
         }
 
         [Fact]
